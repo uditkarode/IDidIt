@@ -1,22 +1,27 @@
 package io.github.uditkarode.ididit
 
-import android.support.v7.app.AppCompatActivity
+import android.content.Context
+import android.graphics.Color
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import co.revely.gradient.RevelyGradient
 import kotlinx.android.synthetic.main.activity_main.*
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        CalligraphyConfig.initDefault(CalligraphyConfig.Builder().setFontAttrId(R.attr.fontPath).build())
         setContentView(R.layout.activity_main)
 
-        sample_text.text = stringFromJNIX()
+        RevelyGradient.linear()
+            .colors(intArrayOf(Color.parseColor("#70e1f5"), Color.parseColor("#ffd194")))
+            .on(header)
     }
 
-    external fun stringFromJNIX(): String
-    companion object {
-        init {
-            System.loadLibrary("ididit")
-        }
+    override fun attachBaseContext(newBase: Context) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
     }
 }
