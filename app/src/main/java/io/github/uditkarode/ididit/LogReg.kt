@@ -9,7 +9,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 
-class MainActivity : AppCompatActivity() {
+class LogReg : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,6 +19,10 @@ class MainActivity : AppCompatActivity() {
         RevelyGradient.linear()
             .colors(intArrayOf(Color.parseColor("#70e1f5"), Color.parseColor("#ffd194")))
             .on(header)
+
+        register.setOnClickListener {
+
+        }
     }
 
     override fun attachBaseContext(newBase: Context) {
