@@ -18,11 +18,12 @@
             android:layout_marginTop="4dp"
             android:paddingBottom="40dp"
             app:itemTextColor="#fbfbfb"
+            app:itemIconTint="#fbfbfb"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/view2"
-            app:menu="@menu/main"
+            app:menu="@menu/drawer"
     />
 
     <TextView
