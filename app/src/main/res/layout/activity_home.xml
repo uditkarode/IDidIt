@@ -1,27 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+        android:background="#203038"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
-    <com.google.android.material.bottomappbar.BottomAppBar
-            android:id="@+id/bar"
-            android:layout_width="match_parent"
+    <TextView
+            android:id="@+id/homeheader"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            app:navigationIcon="@drawable/menu"
-            app:collapseIcon="@drawable/plus"
+            android:layout_gravity="center_horizontal|top"
+            android:layout_marginTop="12dp"
+            android:text="HABITS"
+            android:textSize="45sp"
+            tools:ignore="MissingPrefix"
+            fontPath="CircularB.ttf"
     />
 
+    <com.google.android.material.bottomappbar.BottomAppBar
+            android:id="@+id/bottombar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:navigationIcon="@drawable/menu"
+            android:backgroundTint="#304048"
+            android:layout_gravity="bottom"
+            app:hideOnScroll="true"
+            app:layout_scrollFlags="scroll|enterAlways"
+    />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_anchor="@id/bar"
+            android:src="@drawable/plus"
+            app:layout_anchor="@id/bottombar"
     />
 
 
