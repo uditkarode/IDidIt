@@ -7,6 +7,7 @@
             android:id="@+id/about"
             android:icon="@drawable/about"
             android:title="@string/app_name"
-            app:showAsAction="ifRoom"/>
+            app:showAsAction="ifRoom"
+    />
 
 </menu>
