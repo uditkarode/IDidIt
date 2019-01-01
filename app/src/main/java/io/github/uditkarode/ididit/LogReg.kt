@@ -14,7 +14,6 @@ class LogReg : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        CalligraphyConfig.initDefault(CalligraphyConfig.Builder().setFontAttrId(R.attr.fontPath).build())
         setContentView(R.layout.activity_logreg)
 
         RevelyGradient.linear()
