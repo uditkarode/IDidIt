@@ -1,6 +1,7 @@
 package io.github.uditkarode.ididit
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -19,6 +20,10 @@ class LogReg : AppCompatActivity() {
         RevelyGradient.linear()
             .colors(intArrayOf(Color.parseColor("#70e1f5"), Color.parseColor("#ffd194")))
             .on(header)
+
+        login.setOnClickListener {
+            startActivity(Intent(this@LogReg, Home::class.java)) //@todo: do actual login here
+        }
     }
 
     override fun attachBaseContext(newBase: Context) {
