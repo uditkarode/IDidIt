@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import co.revely.gradient.RevelyGradient
 import kotlinx.android.synthetic.main.activity_logreg.*
-import uk.co.chrisjenx.calligraphy.CalligraphyConfig
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 
 class LogReg : AppCompatActivity() {
