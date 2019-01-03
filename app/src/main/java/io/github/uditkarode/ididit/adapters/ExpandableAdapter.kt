@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import co.revely.gradient.RevelyGradient
 import com.thoughtbot.expandablerecyclerview.ExpandableRecyclerViewAdapter
@@ -13,7 +14,19 @@ import com.thoughtbot.expandablerecyclerview.viewholders.GroupViewHolder
 import io.github.uditkarode.ididit.R
 
 class HabitViewHolder(itemView: View) : GroupViewHolder(itemView) {
+    var expanded = true
     val tv: TextView = itemView.findViewById(R.id.dabtv)
+
+    init {
+        itemView.setOnClickListener(this)
+    }
+
+    override fun onClick(v: View?) {
+        super.onClick(v)
+        expanded = !expanded
+        if(expanded) itemView.findViewById<ImageView>(R.id.arrow).animate().rotation(0f)
+        else itemView.findViewById<ImageView>(R.id.arrow).animate().rotation(180f)
+    }
 }
 
 class ButtonsViewHolder(itemView: View) : ChildViewHolder(itemView)
