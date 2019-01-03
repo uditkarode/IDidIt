@@ -6,6 +6,7 @@
 >
 
     <com.google.android.material.button.MaterialButton
+            android:id="@+id/completed"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="@string/completed_today"
@@ -15,6 +16,7 @@
     />
 
     <com.google.android.material.button.MaterialButton
+            android:id="@+id/failed"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="@string/failed_today"
