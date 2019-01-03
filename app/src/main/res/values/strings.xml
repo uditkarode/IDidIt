@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">I Did It</string>
+    <string name="completed_today">Completed Today</string>
+    <string name="failed_today">Failed Today</string>
 </resources>
