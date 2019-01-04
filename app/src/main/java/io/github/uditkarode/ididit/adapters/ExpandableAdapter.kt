@@ -20,9 +20,7 @@ class HabitViewHolder(itemView: View): RecyclerView.ViewHolder(itemView), View.O
     val bCompleted: MaterialButton = itemView.findViewById(R.id.completed)
     val bFailed: MaterialButton = itemView.findViewById(R.id.failed)
 
-    init {
-        itemView.setOnClickListener(this)
-    }
+    init { itemView.setOnClickListener(this) }
 
     override fun onClick(v: View?) {
         expanded = !expanded
@@ -48,25 +46,29 @@ class ExpandableAdapter(private val str: ArrayList<String>, private val stats: A
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         HabitViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_habit, parent, false))
 
-    override fun getItemCount(): Int {
-        return str.size
-    }
+    override fun getItemCount() = str.size
 
     override fun onBindViewHolder(holder: HabitViewHolder, pos: Int) {
         holder.tv.text = str[pos]
 
-        when(stats[holder.adapterPosition]){
+        when(stats[pos]){
             HabitStatus.COMPLETED -> {
                 holder.bFailed.setBackgroundColor(Color.parseColor(Constants.COLOR_DISABLED))
+                holder.bFailed.isEnabled = false
+                holder.bCompleted.isEnabled = true
                 holder.bCompleted.setBackgroundColor(Color.parseColor(Constants.POSITIVE_BUTTON_COLOR))
             }
 
             HabitStatus.FAILED -> {
                 holder.bCompleted.setBackgroundColor(Color.parseColor(Constants.COLOR_DISABLED))
+                holder.bFailed.isEnabled = true
+                holder.bCompleted.isEnabled = false
                 holder.bFailed.setBackgroundColor(Color.parseColor(Constants.NEGATIVE_BUTTON_COLOR))
             }
 
             HabitStatus.NOT_MARKED -> {
+                holder.bFailed.isEnabled = true
+                holder.bCompleted.isEnabled = true
                 holder.bCompleted.setBackgroundColor(Color.parseColor(Constants.POSITIVE_BUTTON_COLOR))
                 holder.bFailed.setBackgroundColor(Color.parseColor(Constants.NEGATIVE_BUTTON_COLOR))
             }
