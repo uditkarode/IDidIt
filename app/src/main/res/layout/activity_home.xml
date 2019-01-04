@@ -43,8 +43,6 @@
             app:navigationIcon="@drawable/menu"
             android:backgroundTint="#304048"
             android:layout_gravity="bottom"
-            app:hideOnScroll="true"
-            app:layout_scrollFlags="scroll|enterAlways"
     />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
