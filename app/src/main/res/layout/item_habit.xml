@@ -2,30 +2,66 @@
 <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:ignore="UseCompoundDrawables">
 
-    <TextView
-            android:id="@+id/dabtv"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1.0"
-            android:padding="15sp"
-            android:textSize="30sp"
-            fontPath="SanFranciscoM.otf"
-            tools:ignore="MissingPrefix"
-    />
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    <ImageView
-            android:id="@+id/arrow"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/down_arrow"
-            android:layout_gravity="center|end"
-            android:layout_marginEnd="13sp"
-            android:contentDescription="@string/app_name"
-    />
+        <TextView
+                android:id="@+id/dabtv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:padding="15sp"
+                android:textSize="30sp"
+                fontPath="SanFranciscoM.otf"
+                tools:ignore="MissingPrefix"
+        />
+
+        <ImageView
+                android:id="@+id/arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/down_arrow"
+                android:layout_gravity="center|end"
+                android:layout_marginEnd="13sp"
+                android:contentDescription="@string/app_name"
+        />
+
+    </LinearLayout>
+
+    <LinearLayout android:id="@+id/buttonsPanel"
+                  android:orientation="horizontal"
+                  android:visibility="gone"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+    >
+
+        <com.google.android.material.button.MaterialButton
+                android:id="@+id/completed"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/completed_today"
+                android:layout_weight="1.0"
+                android:layout_margin="5sp"
+                android:backgroundTint="#43a047"
+        />
+
+        <com.google.android.material.button.MaterialButton
+                android:id="@+id/failed"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/failed_today"
+                android:layout_weight="1.0"
+                android:layout_margin="5sp"
+                android:backgroundTint="#b71c1c"
+        />
+
+
+    </LinearLayout>
 
 </LinearLayout>

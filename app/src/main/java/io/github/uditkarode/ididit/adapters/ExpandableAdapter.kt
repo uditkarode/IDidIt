@@ -4,72 +4,73 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import co.revely.gradient.RevelyGradient
-import com.thoughtbot.expandablerecyclerview.ExpandableRecyclerViewAdapter
-import com.thoughtbot.expandablerecyclerview.models.ExpandableGroup
-import com.thoughtbot.expandablerecyclerview.viewholders.ChildViewHolder
-import com.thoughtbot.expandablerecyclerview.viewholders.GroupViewHolder
+import com.google.android.material.button.MaterialButton
 import io.github.uditkarode.ididit.R
 import io.github.uditkarode.ididit.utils.Constants
 import io.github.uditkarode.ididit.utils.HabitStatus
-import io.github.uditkarode.ididit.utils.HabitStatus.*
 
-class HabitViewHolder(itemView: View) : GroupViewHolder(itemView) {
+class HabitViewHolder(itemView: View): RecyclerView.ViewHolder(itemView), View.OnClickListener {
     var expanded = true
     val tv: TextView = itemView.findViewById(R.id.dabtv)
+    val bCompleted: MaterialButton = itemView.findViewById(R.id.completed)
+    val bFailed: MaterialButton = itemView.findViewById(R.id.failed)
 
     init {
         itemView.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
-        super.onClick(v)
         expanded = !expanded
-        if(expanded) itemView.findViewById<ImageView>(R.id.arrow).animate().rotation(0f)
-        else itemView.findViewById<ImageView>(R.id.arrow).animate().rotation(180f)
+        val vButtons = v?.findViewById<LinearLayout>(R.id.buttonsPanel)!!
+
+        if(expanded){
+            itemView.findViewById<ImageView>(R.id.arrow).animate().rotation(0f)
+            vButtons.animate().alpha(0f).setDuration(200).start()
+            vButtons.clearAnimation()
+            vButtons.visibility = View.GONE
+        }
+        else {
+            itemView.findViewById<ImageView>(R.id.arrow).animate().rotation(180f)
+            vButtons.visibility = View.VISIBLE
+            vButtons.animate().alpha(1f).setDuration(200).start()
+        }
     }
 }
 
-class ButtonsViewHolder(itemView: View) : ChildViewHolder(itemView) {
-    val bCompleted: Button = itemView.findViewById(R.id.completed)
-    val bFailed: Button = itemView.findViewById(R.id.failed)
-}
+class ExpandableAdapter(private val str: ArrayList<String>, private val stats: ArrayList<HabitStatus>):
+    RecyclerView.Adapter<HabitViewHolder>() {
 
-class ExpandableAdapter(habits: List<ExpandableGroup<*>>, private val str: ArrayList<String>, private val stats: ArrayList<HabitStatus>):
-    ExpandableRecyclerViewAdapter<HabitViewHolder, ButtonsViewHolder>(habits) {
-
-    override fun onCreateGroupViewHolder(parent: ViewGroup, viewType: Int) =
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         HabitViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_habit, parent, false))
 
+    override fun getItemCount(): Int {
+        return str.size
+    }
 
-    override fun onCreateChildViewHolder(parent: ViewGroup, viewType: Int) =
-        ButtonsViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_buttons, parent, false))
+    override fun onBindViewHolder(holder: HabitViewHolder, pos: Int) {
+        holder.tv.text = str[pos]
 
-
-    override fun onBindChildViewHolder(holder: ButtonsViewHolder, flatPosition: Int, group: ExpandableGroup<*>, childIndex: Int) {
-        when(stats[flatPosition]){
-            COMPLETED -> {
+        when(stats[holder.adapterPosition]){
+            HabitStatus.COMPLETED -> {
                 holder.bFailed.setBackgroundColor(Color.parseColor(Constants.COLOR_DISABLED))
                 holder.bCompleted.setBackgroundColor(Color.parseColor(Constants.POSITIVE_BUTTON_COLOR))
             }
 
-            FAILED -> {
+            HabitStatus.FAILED -> {
                 holder.bCompleted.setBackgroundColor(Color.parseColor(Constants.COLOR_DISABLED))
                 holder.bFailed.setBackgroundColor(Color.parseColor(Constants.NEGATIVE_BUTTON_COLOR))
             }
 
-            NOT_MARKED -> {
+            HabitStatus.NOT_MARKED -> {
                 holder.bCompleted.setBackgroundColor(Color.parseColor(Constants.POSITIVE_BUTTON_COLOR))
                 holder.bFailed.setBackgroundColor(Color.parseColor(Constants.NEGATIVE_BUTTON_COLOR))
             }
         }
-    }
-
-    override fun onBindGroupViewHolder(holder: HabitViewHolder, flatPosition: Int, group: ExpandableGroup<*>) {
-        holder.tv.text = str[flatPosition]
 
         RevelyGradient.linear()
             .colors(intArrayOf(Color.parseColor(Constants.HABIT_GRADIENT_COLOR1), Color.parseColor(Constants.HABIT_GRADIENT_COLOR2)))
