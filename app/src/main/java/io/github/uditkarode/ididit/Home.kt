@@ -9,6 +9,7 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import co.revely.gradient.RevelyGradient
+import com.androidnetworking.AndroidNetworking
 import io.github.uditkarode.ididit.adapters.ExpandableAdapter
 import io.github.uditkarode.ididit.utils.*
 import kotlinx.android.synthetic.main.activity_home.*
@@ -23,6 +24,12 @@ class Home : AppCompatActivity() {
         setContentView(R.layout.activity_home)
         setSupportActionBar(bottombar)
 
+        RevelyGradient.linear()
+            .colors(intArrayOf(Color.parseColor(Constants.HOME_GRADIENT_COLOR1), Color.parseColor(Constants.HOME_GRADIENT_COLOR2)))
+            .on(homeheader)
+
+        AndroidNetworking.initialize(applicationContext)
+
         // @todo: remove after UI testing //
         val habits = ArrayList<String>()
 
@@ -34,21 +41,10 @@ class Home : AppCompatActivity() {
         habits.add("Go commit die everyday")
         habits.add("using namespace std; everyday")
         habits.add("Pray for Harambe everyday")
-        habits.add("Go commit die everyday")
-        habits.add("Jump from clock tower everyday")
-        habits.add("Go commit die everyday")
-        habits.add("using namespace std; everyday")
-        habits.add("Pray for Harambe everyday")
-        habits.add("Go commit die everyday")
-        habits.add("Jump from clock tower everyday")
 
         val stats = ArrayList(Arrays.asList(HabitStatus.NOT_MARKED, HabitStatus.COMPLETED, HabitStatus.FAILED, HabitStatus.NOT_MARKED, HabitStatus.NOT_MARKED, HabitStatus.NOT_MARKED, HabitStatus.NOT_MARKED, HabitStatus.NOT_MARKED))
 
         // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ //
-
-        RevelyGradient.linear()
-            .colors(intArrayOf(Color.parseColor(Constants.HOME_GRADIENT_COLOR1), Color.parseColor(Constants.HOME_GRADIENT_COLOR2)))
-            .on(homeheader)
 
         rv_habits.adapter = ExpandableAdapter(habits, stats)
         rv_habits.layoutManager = LinearLayoutManager(this@Home)
