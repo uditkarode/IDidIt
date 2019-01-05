@@ -53,6 +53,10 @@ class ExpandableAdapter(private val str: ArrayList<String>, private val stats: A
 
         when(stats[pos]){
             HabitStatus.COMPLETED -> {
+                RevelyGradient.linear()
+                    .colors(intArrayOf(Color.parseColor(Constants.HABIT_COMPLETED_GRADIENT_COLOR1),
+                        Color.parseColor(Constants.HABIT_COMPLETED_GRADIENT_COLOR2)))
+                    .on(holder.tv)
                 holder.bFailed.setBackgroundColor(Color.parseColor(Constants.COLOR_DISABLED))
                 holder.bFailed.isEnabled = false
                 holder.bCompleted.isEnabled = true
@@ -60,6 +64,10 @@ class ExpandableAdapter(private val str: ArrayList<String>, private val stats: A
             }
 
             HabitStatus.FAILED -> {
+                RevelyGradient.linear()
+                    .colors(intArrayOf(Color.parseColor(Constants.HABIT_FAILED_GRADIENT_COLOR1),
+                        Color.parseColor(Constants.HABIT_FAILED_GRADIENT_COLOR2)))
+                    .on(holder.tv)
                 holder.bCompleted.setBackgroundColor(Color.parseColor(Constants.COLOR_DISABLED))
                 holder.bFailed.isEnabled = true
                 holder.bCompleted.isEnabled = false
@@ -67,15 +75,15 @@ class ExpandableAdapter(private val str: ArrayList<String>, private val stats: A
             }
 
             HabitStatus.NOT_MARKED -> {
+                RevelyGradient.linear()
+                    .colors(intArrayOf(Color.parseColor(Constants.HABIT_GRADIENT_COLOR1),
+                        Color.parseColor(Constants.HABIT_GRADIENT_COLOR2)))
+                    .on(holder.tv)
                 holder.bFailed.isEnabled = true
                 holder.bCompleted.isEnabled = true
                 holder.bCompleted.setBackgroundColor(Color.parseColor(Constants.POSITIVE_BUTTON_COLOR))
                 holder.bFailed.setBackgroundColor(Color.parseColor(Constants.NEGATIVE_BUTTON_COLOR))
             }
         }
-
-        RevelyGradient.linear()
-            .colors(intArrayOf(Color.parseColor(Constants.HABIT_GRADIENT_COLOR1), Color.parseColor(Constants.HABIT_GRADIENT_COLOR2)))
-            .on(holder.tv)
     }
 }
