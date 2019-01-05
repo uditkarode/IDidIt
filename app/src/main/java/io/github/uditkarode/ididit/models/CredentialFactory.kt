@@ -16,6 +16,6 @@ class CredentialFactory(val user: String, val pass: String) {
         if (user.length < 4) error += "Username cannot be shorter than 4 characters!"
         if (pass.length < 6) error += "\nPassword cannot contain less than 6 characters!"
         if (user.contains(" ")) error += "\nUsername cannot contain spaces!"
-        return Credential(user.toLowerCase(), pass, error)
+        return Credential(user, pass, error)
     }
 }
