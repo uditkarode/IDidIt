@@ -5,23 +5,32 @@ import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.util.DisplayMetrics
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.animation.AccelerateDecelerateInterpolator
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import co.revely.gradient.RevelyGradient
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.input.input
 import com.androidnetworking.AndroidNetworking
 import com.androidnetworking.error.ANError
 import com.androidnetworking.interfaces.JSONArrayRequestListener
+import com.androidnetworking.interfaces.JSONObjectRequestListener
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import io.github.uditkarode.ididit.adapters.ExpandableAdapter
 import io.github.uditkarode.ididit.models.Habit
 import io.github.uditkarode.ididit.utils.BABDrawer
 import io.github.uditkarode.ididit.utils.Constants
 import io.github.uditkarode.ididit.utils.HabitStatus
-import kotlinx.android.synthetic.main.activity_home.*
+import kotlinx.android.synthetic.main.activity_home.bottombar
+import kotlinx.android.synthetic.main.activity_home.homeLoader
+import kotlinx.android.synthetic.main.activity_home.homeheader
+import kotlinx.android.synthetic.main.activity_home.rv_habits
 import org.json.JSONArray
+import org.json.JSONObject
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 
 class Home : AppCompatActivity() {
@@ -29,6 +38,7 @@ class Home : AppCompatActivity() {
     private lateinit var token: String
     private lateinit var username: String
     private lateinit var joinDate: String
+    private lateinit var fab: FloatingActionButton
 
     private lateinit var adapterArray: ArrayList<Habit>
 
@@ -42,6 +52,8 @@ class Home : AppCompatActivity() {
             .on(homeheader)
 
         AndroidNetworking.initialize(applicationContext)
+
+        fab = findViewById(R.id.fab)
 
         val sp = getSharedPreferences("account", 0)
         token = sp.getString("token", "ERROR")!!
@@ -87,8 +99,49 @@ class Home : AppCompatActivity() {
         fab.setOnClickListener {
             val metrics = DisplayMetrics()
             windowManager.defaultDisplay.getMetrics(metrics)
-            fab.animate().translationYBy(-1f * (metrics.heightPixels/2f) + 200).setDuration(500).start()
+            val oldY = fab.y
+            fab.animate().x(fab.x).y(metrics.heightPixels/2.3f).setInterpolator(AccelerateDecelerateInterpolator()).setDuration(500).start()
+
+            Handler().postDelayed({
+                fab.visibility = View.GONE
+                MaterialDialog(this).show {
+                    cancelable(false)
+
+                    input { _, text ->
+                        addResolution(text.toString())
+                        fab.visibility = View.VISIBLE
+                        fab.animate().x(fab.x).y(oldY).setInterpolator(AccelerateDecelerateInterpolator()).setDuration(400).start()
+                    }
+
+                    negativeButton {
+                        fab.visibility = View.VISIBLE
+                        fab.animate().x(fab.x).y(oldY).setInterpolator(AccelerateDecelerateInterpolator()).setDuration(400).start()
+                    }
+
+                    positiveButton(text = "Add")
+                    negativeButton(text = "Cancel")
+                }
+            }, 450)
         }
+    }
+
+    private fun addResolution(title: String){
+        dataIsLoading()
+
+        AndroidNetworking.post(Constants.BASE_URL + Constants.ADD_RESOLUTION_ENDPOINT)
+            .addHeaders("Authorization", token)
+            .addJSONObjectBody(JSONObject().put("title", title))
+            .build()
+            .getAsJSONObject(object: JSONObjectRequestListener {
+                override fun onResponse(response: JSONObject?) {
+                    Log.e("GOTYA", response?.toString())
+                    datahasLoaded(isEmpty = false)
+                }
+
+                override fun onError(anError: ANError?) {
+                    Log.e("NOTGOTYA", anError?.errorDetail)
+                }
+            })
     }
 
     private fun dataIsLoading(){
