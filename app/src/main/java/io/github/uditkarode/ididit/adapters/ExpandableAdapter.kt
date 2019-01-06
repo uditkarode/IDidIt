@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import co.revely.gradient.RevelyGradient
 import com.google.android.material.button.MaterialButton
 import io.github.uditkarode.ididit.R
+import io.github.uditkarode.ididit.models.Habit
 import io.github.uditkarode.ididit.utils.Constants
 import io.github.uditkarode.ididit.utils.HabitStatus
 
@@ -40,18 +41,18 @@ class HabitViewHolder(itemView: View): RecyclerView.ViewHolder(itemView), View.O
     }
 }
 
-class ExpandableAdapter(private val str: ArrayList<String>, private val stats: ArrayList<HabitStatus>):
+class ExpandableAdapter(private val habitList: ArrayList<Habit>):
     RecyclerView.Adapter<HabitViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         HabitViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_habit, parent, false))
 
-    override fun getItemCount() = str.size
+    override fun getItemCount() = habitList.size
 
     override fun onBindViewHolder(holder: HabitViewHolder, pos: Int) {
-        holder.tv.text = str[pos]
+        holder.tv.text = habitList[pos].habitName
 
-        when(stats[pos]){
+        when(habitList[pos].habitStatus){
             HabitStatus.COMPLETED -> {
                 RevelyGradient.linear()
                     .colors(intArrayOf(Color.parseColor(Constants.HABIT_COMPLETED_GRADIENT_COLOR1),
