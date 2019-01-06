@@ -32,7 +32,6 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:layout_marginTop="16dp"
-            android:text="necessity420"
             android:textColor="#fbfbfb"
             android:textSize="18sp"
             android:textStyle="bold"
@@ -45,7 +44,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
-            android:text="Joined: 1/1/19"
             android:textColor="#fbfbfb"
             app:layout_constraintStart_toStartOf="@+id/textView"
             app:layout_constraintTop_toBottomOf="@+id/textView" />
