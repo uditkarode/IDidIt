@@ -27,6 +27,12 @@ class LogReg : Activity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        if(getSharedPreferences("account", 0).getBoolean("shouldAutoLogin", false)){
+            startActivity(Intent(this@LogReg, Home::class.java))
+            finish()
+        }
+
         setContentView(R.layout.activity_logreg)
         AndroidNetworking.initialize(applicationContext)
 
@@ -53,6 +59,7 @@ class LogReg : Activity() {
                             getSharedPreferences("account", 0).edit {
                                 putString("token", okhttpResponse.header("X-Auth-Token"))
                                 putString("username", cLogin.username)
+                                putBoolean("shouldAutoLogin", true)
                             }
                             loader_logreg.animate().alpha(0f).setDuration(100).start()
                             startActivity(Intent(this@LogReg, Home::class.java)) ; finish()
