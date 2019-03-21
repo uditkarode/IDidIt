@@ -1,6 +1,7 @@
 package io.github.uditkarode.ididit.adapters
 
 import android.graphics.Color
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,14 +10,20 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import co.revely.gradient.RevelyGradient
+import com.androidnetworking.AndroidNetworking
+import com.androidnetworking.error.ANError
+import com.androidnetworking.interfaces.JSONObjectRequestListener
 import com.google.android.material.button.MaterialButton
+import io.github.uditkarode.ididit.Home
 import io.github.uditkarode.ididit.R
 import io.github.uditkarode.ididit.models.Habit
 import io.github.uditkarode.ididit.utils.Constants
 import io.github.uditkarode.ididit.utils.HabitStatus
+import org.json.JSONObject
+import java.lang.ref.WeakReference
 
 class HabitViewHolder(itemView: View): RecyclerView.ViewHolder(itemView), View.OnClickListener {
-    var expanded = true
+    private var expanded = true
     val tv: TextView = itemView.findViewById(R.id.dabtv)
     val bCompleted: MaterialButton = itemView.findViewById(R.id.completed)
     val bFailed: MaterialButton = itemView.findViewById(R.id.failed)
@@ -41,7 +48,7 @@ class HabitViewHolder(itemView: View): RecyclerView.ViewHolder(itemView), View.O
     }
 }
 
-class ExpandableAdapter(private val habitList: ArrayList<Habit>):
+class ExpandableAdapter(private val habitList: ArrayList<Habit>, val home: WeakReference<Home>):
     RecyclerView.Adapter<HabitViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
@@ -52,39 +59,94 @@ class ExpandableAdapter(private val habitList: ArrayList<Habit>):
     override fun onBindViewHolder(holder: HabitViewHolder, pos: Int) {
         holder.tv.text = habitList[pos].habitName
 
-        when(habitList[pos].habitStatus){
-            HabitStatus.COMPLETED -> {
-                RevelyGradient.linear()
-                    .colors(intArrayOf(Color.parseColor(Constants.HABIT_COMPLETED_GRADIENT_COLOR1),
-                        Color.parseColor(Constants.HABIT_COMPLETED_GRADIENT_COLOR2)))
-                    .on(holder.tv)
-                holder.bFailed.setBackgroundColor(Color.parseColor(Constants.COLOR_DISABLED))
-                holder.bFailed.isEnabled = false
-                holder.bCompleted.isEnabled = true
-                holder.bCompleted.setBackgroundColor(Color.parseColor(Constants.POSITIVE_BUTTON_COLOR))
-            }
+        holder.bCompleted.setOnClickListener {
+            home.get()?.dataIsLoading()
 
-            HabitStatus.FAILED -> {
-                RevelyGradient.linear()
-                    .colors(intArrayOf(Color.parseColor(Constants.HABIT_FAILED_GRADIENT_COLOR1),
-                        Color.parseColor(Constants.HABIT_FAILED_GRADIENT_COLOR2)))
-                    .on(holder.tv)
-                holder.bCompleted.setBackgroundColor(Color.parseColor(Constants.COLOR_DISABLED))
-                holder.bFailed.isEnabled = true
-                holder.bCompleted.isEnabled = false
-                holder.bFailed.setBackgroundColor(Color.parseColor(Constants.NEGATIVE_BUTTON_COLOR))
-            }
+            AndroidNetworking.post(Constants.BASE_URL + Constants.SET_RESOLUTION_STATUS_ENDPOINT)
+                .addHeaders("Authorisation", home.get()?.token)
+                .addBodyParameter("title", habitList[pos].habitName)
+                .addBodyParameter("new_status", "C")
+                .build()
+                .getAsJSONObject(object : JSONObjectRequestListener {
+                    override fun onResponse(response: JSONObject?) {
+                        Log.e("MCGOT_SUCCESSRESP", response.toString())
+                        home.get()?.refreshRvData()
+                    }
 
-            HabitStatus.NOT_MARKED -> {
-                RevelyGradient.linear()
-                    .colors(intArrayOf(Color.parseColor(Constants.HABIT_GRADIENT_COLOR1),
-                        Color.parseColor(Constants.HABIT_GRADIENT_COLOR2)))
-                    .on(holder.tv)
-                holder.bFailed.isEnabled = true
-                holder.bCompleted.isEnabled = true
-                holder.bCompleted.setBackgroundColor(Color.parseColor(Constants.POSITIVE_BUTTON_COLOR))
-                holder.bFailed.setBackgroundColor(Color.parseColor(Constants.NEGATIVE_BUTTON_COLOR))
+                    override fun onError(anError: ANError?) {
+                        Log.e("MCGOT_FAILURERESP", anError?.errorDetail.toString())
+                        home.get()?.dataHasLoaded(isEmpty = true)
+                    }
+                })
+        }
+
+        holder.bFailed.setOnClickListener {
+            holder.tv.text = habitList[pos].habitName
+            home.get()?.dataIsLoading()
+
+            AndroidNetworking.post(Constants.BASE_URL + Constants.SET_RESOLUTION_STATUS_ENDPOINT)
+                .addHeaders("Authorisation", home.get()?.token)
+                .addBodyParameter("title", habitList[pos].habitName)
+                .addBodyParameter("new_status", "F")
+                .build()
+                .getAsJSONObject(object : JSONObjectRequestListener {
+                    override fun onResponse(response: JSONObject?) {
+                        home.get()?.refreshRvData()
+                    }
+
+                    override fun onError(anError: ANError?) {
+                        home.get()?.dataHasLoaded(isEmpty = true)
+                    }
+                })
+        }
+
+            Log.e("HSHERE", habitList[pos].habitStatus.toString())
+
+            when (habitList[pos].habitStatus) {
+                HabitStatus.COMPLETED -> {
+                    RevelyGradient.linear()
+                        .colors(
+                            intArrayOf(
+                                Color.parseColor(Constants.HABIT_COMPLETED_GRADIENT_COLOR1),
+                                Color.parseColor(Constants.HABIT_COMPLETED_GRADIENT_COLOR2)
+                            )
+                        )
+                        .on(holder.tv)
+                    holder.bFailed.setBackgroundColor(Color.parseColor(Constants.COLOR_DISABLED))
+                    holder.bFailed.isEnabled = false
+                    holder.bCompleted.isEnabled = true
+                    holder.bCompleted.setBackgroundColor(Color.parseColor(Constants.POSITIVE_BUTTON_COLOR))
+                }
+
+                HabitStatus.FAILED -> {
+                    RevelyGradient.linear()
+                        .colors(
+                            intArrayOf(
+                                Color.parseColor(Constants.HABIT_FAILED_GRADIENT_COLOR1),
+                                Color.parseColor(Constants.HABIT_FAILED_GRADIENT_COLOR2)
+                            )
+                        )
+                        .on(holder.tv)
+                    holder.bCompleted.setBackgroundColor(Color.parseColor(Constants.COLOR_DISABLED))
+                    holder.bFailed.isEnabled = true
+                    holder.bCompleted.isEnabled = false
+                    holder.bFailed.setBackgroundColor(Color.parseColor(Constants.NEGATIVE_BUTTON_COLOR))
+                }
+
+                HabitStatus.NOT_MARKED -> {
+                    RevelyGradient.linear()
+                        .colors(
+                            intArrayOf(
+                                Color.parseColor(Constants.HABIT_GRADIENT_COLOR1),
+                                Color.parseColor(Constants.HABIT_GRADIENT_COLOR2)
+                            )
+                        )
+                        .on(holder.tv)
+                    holder.bFailed.isEnabled = true
+                    holder.bCompleted.isEnabled = true
+                    holder.bCompleted.setBackgroundColor(Color.parseColor(Constants.POSITIVE_BUTTON_COLOR))
+                    holder.bFailed.setBackgroundColor(Color.parseColor(Constants.NEGATIVE_BUTTON_COLOR))
+                }
             }
         }
     }
-}
