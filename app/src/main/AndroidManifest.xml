@@ -19,6 +19,7 @@
         </activity>
         <activity android:name=".Home" android:theme="@style/AppTheme"/>
         <activity android:name=".History"/>
+        <activity android:name=".AboutUs"/>
     </application>
 
 </manifest>

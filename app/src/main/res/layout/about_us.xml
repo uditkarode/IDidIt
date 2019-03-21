@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--suppress AndroidUnknownAttribute -->
+<androidx.cardview.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:ignore="HardcodedText"
+        app:cardUseCompatPadding="true">
+
+    <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:orientation="vertical">
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="72dp"
+                    android:orientation="horizontal"
+                    android:padding="16dp">
+
+                <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center_vertical"
+                        android:src="@mipmap/ic_launcher"
+                        tools:ignore="ContentDescription" />
+
+                <TextView
+                        android:id="@+id/about_header"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:textSize="33sp"
+                        android:paddingLeft="16dp"
+                        android:paddingRight="16dp"
+                        android:text="I DID IT"
+                        android:textStyle="bold"
+                        fontPath="CircularB.ttf"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Headline" tools:ignore="MissingPrefix"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:focusable="true">
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="32dp"
+                        android:layout_marginStart="32dp"
+                        android:orientation="vertical"
+                        android:paddingBottom="8dp"
+                        android:paddingTop="8dp">
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start|center_vertical"
+                            android:paddingBottom="16dp"
+                            android:paddingRight="16dp"
+                            android:text="Info"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                            android:textColor="?android:textColorSecondary" />
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0.8"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Version"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                            tools:ignore="HardcodedText" />
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="Beta"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Code Name"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                            tools:ignore="HardcodedText" />
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="uditkarode.github.io"
+                            android:layout_marginTop="10dp"
+                            android:autoLink="web"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
+
+                    <TextView
+                            android:id="@+id/app_version"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Website"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                            tools:ignore="HardcodedText" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp">
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="32dp"
+                        android:layout_marginStart="32dp"
+                        android:orientation="vertical"
+                        android:paddingBottom="8dp"
+                        android:paddingTop="8dp">
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start|center_vertical"
+                            android:paddingBottom="16dp"
+                            android:paddingRight="16dp"
+                            android:text="Authors"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                            android:textColor="?android:textColorSecondary" />
+
+                    <TextView
+                            android:id="@+id/udit"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Udit Karode"
+                            fontPath="SanFranciscoM.otf"
+                            android:textSize="18sp"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                            tools:ignore="MissingPrefix"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10sp"
+                            android:text="Android/Web Developer"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                            tools:ignore="HardcodedText" />
+
+                    <TextView
+                            android:id="@+id/karthik"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Karthik Arwin"
+                            android:textSize="18sp"
+                            fontPath="SanFranciscoM.otf"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                            tools:ignore="MissingPrefix"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Web Developer"
+                            android:layout_marginBottom="10sp"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                            tools:ignore="HardcodedText" />
+
+                    <TextView
+                            android:id="@+id/himanshu"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="18sp"
+                            android:text="Himanshu Jain"
+                            fontPath="SanFranciscoM.otf"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                            tools:ignore="MissingPrefix"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Graphic Designer"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                            tools:ignore="HardcodedText" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.cardview.widget.CardView>

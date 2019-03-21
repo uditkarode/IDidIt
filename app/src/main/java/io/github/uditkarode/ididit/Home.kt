@@ -1,6 +1,7 @@
 package io.github.uditkarode.ididit
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
@@ -75,6 +76,7 @@ class Home : AppCompatActivity() {
             .getAsJSONArray(object: JSONArrayRequestListener {
                 override fun onResponse(response: JSONArray?) {
                     if(adapterArray.isNotEmpty()) adapterArray.clear()
+
                     for(i in 0 until response?.length()!!) {
                         val tmpObj = response.getJSONObject(i)
                         adapterArray.add(Habit(tmpObj.getString("title"), stringStatus(tmpObj.getString("status"))))
@@ -137,6 +139,9 @@ class Home : AppCompatActivity() {
 
     fun dataHasLoaded(isEmpty: Boolean){
         if(!isEmpty){
+            adapter.notifyDataSetChanged()
+            adapter.notifyDataSetChanged()
+
             homeLoader.animate().alpha(0f).setDuration(250).start()
             Handler().postDelayed({
                 homeLoader.visibility = View.GONE
@@ -177,6 +182,10 @@ class Home : AppCompatActivity() {
                 tbpBundle.putString("joinDate", "joined on: " + joinDate)
                 bottomNavDrawerFragment.arguments = tbpBundle
                 bottomNavDrawerFragment.show(supportFragmentManager, bottomNavDrawerFragment.tag)
+            }
+
+            R.id.aboutus -> {
+                startActivity(Intent(this@Home, AboutUs::class.java))
             }
         }
         return true
