@@ -4,12 +4,10 @@ import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
-import android.util.DisplayMetrics
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.view.animation.AccelerateDecelerateInterpolator
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import co.revely.gradient.RevelyGradient
@@ -25,22 +23,21 @@ import io.github.uditkarode.ididit.models.Habit
 import io.github.uditkarode.ididit.utils.BABDrawer
 import io.github.uditkarode.ididit.utils.Constants
 import io.github.uditkarode.ididit.utils.HabitStatus
-import kotlinx.android.synthetic.main.activity_home.bottombar
-import kotlinx.android.synthetic.main.activity_home.homeLoader
-import kotlinx.android.synthetic.main.activity_home.homeheader
-import kotlinx.android.synthetic.main.activity_home.rv_habits
+import kotlinx.android.synthetic.main.activity_home.*
 import org.json.JSONArray
 import org.json.JSONObject
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
+import java.lang.ref.WeakReference
 
 class Home : AppCompatActivity() {
 
-    private lateinit var token: String
+    lateinit var token: String
     private lateinit var username: String
     private lateinit var joinDate: String
     private lateinit var fab: FloatingActionButton
 
     private lateinit var adapterArray: ArrayList<Habit>
+    private lateinit var adapter: ExpandableAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,70 +55,54 @@ class Home : AppCompatActivity() {
         val sp = getSharedPreferences("account", 0)
         token = sp.getString("token", "ERROR")!!
         username = sp.getString("username", "ERROR")!!
-        joinDate = sp.getString("joinDate", "4/2/1337")!!
+        joinDate = sp.getString("joined_on", "420/69/1337")!! //@TODO
 
         adapterArray = ArrayList()
 
-        rv_habits.adapter = ExpandableAdapter(adapterArray)
+        adapter = ExpandableAdapter(adapterArray, WeakReference(this@Home))
+        rv_habits.adapter = adapter
         rv_habits.layoutManager = LinearLayoutManager(this@Home)
 
         refreshRvData()
     }
 
-    private fun refreshRvData(){
+    fun refreshRvData(){
         dataIsLoading()
 
         AndroidNetworking.get(Constants.BASE_URL + Constants.GET_RESOLUTIONS_ENDPOINT)
-            .addHeaders("Authorization", token)
+            .addHeaders("Authorisation", token)
             .build()
             .getAsJSONArray(object: JSONArrayRequestListener {
                 override fun onResponse(response: JSONArray?) {
+                    if(adapterArray.isNotEmpty()) adapterArray.clear()
                     for(i in 0 until response?.length()!!) {
                         val tmpObj = response.getJSONObject(i)
-                        adapterArray.add(Habit(tmpObj.getString("resolution"), HabitStatus.NOT_MARKED, tmpObj.getString("_id")))
+                        adapterArray.add(Habit(tmpObj.getString("title"), stringStatus(tmpObj.getString("status"))))
                     }
-
-                    datahasLoaded(isEmpty = false)
+                    if(adapterArray.isEmpty()) dataHasLoaded(isEmpty = true)
+                    else dataHasLoaded(isEmpty = false)
                 }
 
                 override fun onError(anError: ANError?) {
                     MaterialDialog(this@Home).show {
                         title(text = "Data Retrieval Failed")
-                        message(text = anError?.errorDetail)
+                        message(text = anError?.errorBody)
                         positiveButton(text="Okay")
                         positiveButton {
-                            datahasLoaded(isEmpty = true)
+                            dataHasLoaded(isEmpty = true)
                         }
                     }
                 }
             })
 
         fab.setOnClickListener {
-            val metrics = DisplayMetrics()
-            windowManager.defaultDisplay.getMetrics(metrics)
-            val oldY = fab.y
-            fab.animate().x(fab.x).y(metrics.heightPixels/2.3f).setInterpolator(AccelerateDecelerateInterpolator()).setDuration(500).start()
-
-            Handler().postDelayed({
-                fab.visibility = View.GONE
-                MaterialDialog(this).show {
-                    cancelable(false)
-
-                    input { _, text ->
-                        addResolution(text.toString())
-                        fab.visibility = View.VISIBLE
-                        fab.animate().x(fab.x).y(oldY).setInterpolator(AccelerateDecelerateInterpolator()).setDuration(400).start()
-                    }
-
-                    negativeButton {
-                        fab.visibility = View.VISIBLE
-                        fab.animate().x(fab.x).y(oldY).setInterpolator(AccelerateDecelerateInterpolator()).setDuration(400).start()
-                    }
-
-                    positiveButton(text = "Add")
-                    negativeButton(text = "Cancel")
+            MaterialDialog(this@Home).show {
+                input { _, text ->
+                    addResolution(text.toString())
                 }
-            }, 450)
+                positiveButton(text = "Okay")
+                negativeButton (text = "Cancel")
+            }
         }
     }
 
@@ -129,13 +110,13 @@ class Home : AppCompatActivity() {
         dataIsLoading()
 
         AndroidNetworking.post(Constants.BASE_URL + Constants.ADD_RESOLUTION_ENDPOINT)
-            .addHeaders("Authorization", token)
-            .addJSONObjectBody(JSONObject().put("title", title))
+            .addHeaders("Authorisation", token)
+            .addBodyParameter("title", title)
             .build()
             .getAsJSONObject(object: JSONObjectRequestListener {
                 override fun onResponse(response: JSONObject?) {
                     Log.e("GOTYA", response?.toString())
-                    datahasLoaded(isEmpty = false)
+                    refreshRvData()
                 }
 
                 override fun onError(anError: ANError?) {
@@ -144,7 +125,7 @@ class Home : AppCompatActivity() {
             })
     }
 
-    private fun dataIsLoading(){
+    fun dataIsLoading(){
         rv_habits.animate().alpha(0f).setDuration(150).start()
         Handler().postDelayed({
             rv_habits.visibility = View.GONE
@@ -154,18 +135,28 @@ class Home : AppCompatActivity() {
         }, 150)
     }
 
-    private fun datahasLoaded(isEmpty: Boolean){
-        rv_habits.adapter?.notifyDataSetChanged()
-
+    fun dataHasLoaded(isEmpty: Boolean){
         if(!isEmpty){
-            homeLoader.animate().alpha(0f).setDuration(150).start()
+            homeLoader.animate().alpha(0f).setDuration(250).start()
             Handler().postDelayed({
                 homeLoader.visibility = View.GONE
+                no_habits.visibility = View.GONE
                 rv_habits.visibility = View.VISIBLE
                 rv_habits.alpha = 0f
                 rv_habits.animate().alpha(1f).setDuration(150).start()
             }, 150)
+        } else {
+            homeLoader.visibility = View.INVISIBLE
+            if(adapterArray.isEmpty()) no_habits.visibility = View.VISIBLE
         }
+    }
+
+    private fun stringStatus(str: String): HabitStatus {
+        when(str){
+            "C" -> return HabitStatus.COMPLETED
+            "F" -> return HabitStatus.FAILED
+            "N" -> return HabitStatus.NOT_MARKED
+        } ; return HabitStatus.NOT_MARKED
     }
 
     override fun attachBaseContext(newBase: Context) {
@@ -183,7 +174,7 @@ class Home : AppCompatActivity() {
                 val bottomNavDrawerFragment = BABDrawer()
                 val tbpBundle = Bundle()
                 tbpBundle.putString("userName", username)
-                tbpBundle.putString("joinDate", joinDate)
+                tbpBundle.putString("joinDate", "joined on: " + joinDate)
                 bottomNavDrawerFragment.arguments = tbpBundle
                 bottomNavDrawerFragment.show(supportFragmentManager, bottomNavDrawerFragment.tag)
             }

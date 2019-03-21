@@ -2,4 +2,9 @@
     <string name="app_name">I Did It</string>
     <string name="completed_today">Completed Today</string>
     <string name="failed_today">Failed Today</string>
+    <string name="no_habits"><font color='#f9fbe7'> You have no habit entries :(\n Press the <font color='#ffa842'>plus</font> button below\nto add some to your account!</font></string>
+    <string name="habits">HABITS</string>
+    <string name="idi">I DID IT</string>
+    <string name="login_hont">Username</string>
+    <string name="password_hont">Password</string>
 </resources>

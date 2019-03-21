@@ -50,8 +50,8 @@ class LogReg : Activity() {
             if (cLogin.isErrorFree()) {
                 initializeLoading()
                 AndroidNetworking.post(Constants.BASE_URL + Constants.LOGIN_ENDPOINT)
-                    .addHeaders("Content-Type", "application/json")
-                    .addJSONObjectBody(JSONObject().put("username", cLogin.username).put("password", cLogin.password))
+                    .addBodyParameter("user", cLogin.username)
+                    .addBodyParameter("password", cLogin.password)
                     .build()
                     .getAsOkHttpResponseAndJSONObject(object : OkHttpResponseAndJSONObjectRequestListener {
                         override fun onResponse(okhttpResponse: Response, response: JSONObject) {
@@ -59,6 +59,7 @@ class LogReg : Activity() {
                             getSharedPreferences("account", 0).edit {
                                 putString("token", okhttpResponse.header("X-Auth-Token"))
                                 putString("username", cLogin.username)
+                                putString("joined_on", response.getString("joined_on"))
                                 putBoolean("shouldAutoLogin", true)
                             }
                             loader_logreg.animate().alpha(0f).setDuration(100).start()
@@ -91,8 +92,8 @@ class LogReg : Activity() {
             if (cLogin.isErrorFree()) {
                 initializeLoading()
                 AndroidNetworking.post(Constants.BASE_URL + Constants.SIGN_UP_ENDPOINT)
-                    .addHeaders("Content-Type", "application/json")
-                    .addJSONObjectBody(JSONObject().put("username", cLogin.username).put("password", cLogin.password))
+                    .addBodyParameter("user", cLogin.username)
+                    .addBodyParameter("password", cLogin.password)
                     .build()
                     .getAsOkHttpResponseAndJSONObject(object : OkHttpResponseAndJSONObjectRequestListener {
                         override fun onResponse(okhttpResponse: Response, response: JSONObject) {
@@ -103,7 +104,7 @@ class LogReg : Activity() {
                         override fun onError(error: ANError) {
                             MaterialDialog(this@LogReg).show {
                                 title(text = "Register Failed")
-                                message(text = JSONObject(error.errorBody.toString()).getString("message"))
+                                message(text = JSONObject(error.errorBody.toString()).getString("status"))
                                 positiveButton(text="Okay")
                                 positiveButton {
                                     stopLoading()

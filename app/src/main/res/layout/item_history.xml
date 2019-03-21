@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--suppress ALL -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:tools="http://schemas.android.com/tools"
               android:orientation="vertical"
@@ -13,7 +14,6 @@
                 android:id="@+id/tvDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="5"
                 fontPath="CircularB.ttf"
                 android:textSize="120sp"
                 android:padding="20sp"
@@ -32,7 +32,6 @@
                     android:layout_height="wrap_content"
                     fontPath="SanFranciscoM.otf"
                     android:textSize="30sp"
-                    android:text="Wednesday"
                     tools:ignore="MissingPrefix"/>
 
             <TextView
@@ -42,7 +41,6 @@
                     fontPath="SanFranciscoM.otf"
                     android:layout_marginTop="25sp"
                     android:textSize="25sp"
-                    android:text="2 Habits Completed"
                     tools:ignore="MissingPrefix"/>
 
             <TextView
@@ -51,7 +49,6 @@
                     android:layout_height="wrap_content"
                     fontPath="SanFranciscoM.otf"
                     android:textSize="25sp"
-                    android:text="3 Habits Failed"
                     tools:ignore="MissingPrefix"/>
 
         </LinearLayout>

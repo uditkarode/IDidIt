@@ -33,7 +33,7 @@ class BABDrawer: BottomSheetDialogFragment() {
             when (menuItem.itemId) {
                 R.id.history -> startActivity(Intent(navigation_view.context, History::class.java))
                 R.id.logout -> {
-                    activity?.getSharedPreferences("accounts", 0)?.edit()?.clear()?.apply()
+                    activity?.getSharedPreferences("account", 0)?.edit()?.clear()?.apply()
                     Toasty.success(activity as Context, "Log out successful!", Toast.LENGTH_SHORT, true).show()
                     startActivity(Intent(activity, LogReg::class.java))
                 }
