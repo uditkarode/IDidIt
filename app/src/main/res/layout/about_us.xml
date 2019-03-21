@@ -71,10 +71,10 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="start|center_vertical"
                             android:paddingBottom="16dp"
-                            android:paddingRight="16dp"
+                            android:paddingEnd="16dp"
                             android:text="Info"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                            android:textColor="?android:textColorSecondary" />
+                            android:textColor="?android:textColorSecondary" tools:ignore="RtlSymmetry"/>
 
                     <TextView
                             android:layout_width="wrap_content"
@@ -154,7 +154,7 @@
                             android:id="@+id/udit"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Udit Karode"
+                            android:text="@string/udit"
                             fontPath="SanFranciscoM.otf"
                             android:textSize="18sp"
                             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
@@ -172,7 +172,7 @@
                             android:id="@+id/karthik"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Karthik Arwin"
+                            android:text="@string/karthik"
                             android:textSize="18sp"
                             fontPath="SanFranciscoM.otf"
                             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
@@ -191,7 +191,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="18sp"
-                            android:text="Himanshu Jain"
+                            android:text="@string/himanshu"
                             fontPath="SanFranciscoM.otf"
                             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
                             tools:ignore="MissingPrefix"/>
