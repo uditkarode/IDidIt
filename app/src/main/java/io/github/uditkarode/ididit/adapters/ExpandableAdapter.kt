@@ -100,10 +100,11 @@ class ExpandableAdapter(private val habitList: ArrayList<Habit>, val home: WeakR
                 })
         }
 
-            Log.e("HSHERE", habitList[pos].habitStatus.toString())
+        Log.e("HSHERE", habitList[pos].habitStatus.toString())
 
-            when (habitList[pos].habitStatus) {
+        when (habitList[pos].habitStatus) {
                 HabitStatus.COMPLETED -> {
+                    holder.tv.invalidate()
                     RevelyGradient.linear()
                         .colors(
                             intArrayOf(
@@ -112,6 +113,7 @@ class ExpandableAdapter(private val habitList: ArrayList<Habit>, val home: WeakR
                             )
                         )
                         .on(holder.tv)
+                    holder.tv.invalidate()
                     holder.bFailed.setBackgroundColor(Color.parseColor(Constants.COLOR_DISABLED))
                     holder.bFailed.isEnabled = false
                     holder.bCompleted.isEnabled = true
@@ -119,6 +121,7 @@ class ExpandableAdapter(private val habitList: ArrayList<Habit>, val home: WeakR
                 }
 
                 HabitStatus.FAILED -> {
+                    holder.tv.invalidate()
                     RevelyGradient.linear()
                         .colors(
                             intArrayOf(
@@ -127,6 +130,8 @@ class ExpandableAdapter(private val habitList: ArrayList<Habit>, val home: WeakR
                             )
                         )
                         .on(holder.tv)
+
+                    holder.tv.invalidate()
                     holder.bCompleted.setBackgroundColor(Color.parseColor(Constants.COLOR_DISABLED))
                     holder.bFailed.isEnabled = true
                     holder.bCompleted.isEnabled = false
@@ -142,11 +147,12 @@ class ExpandableAdapter(private val habitList: ArrayList<Habit>, val home: WeakR
                             )
                         )
                         .on(holder.tv)
+
                     holder.bFailed.isEnabled = true
                     holder.bCompleted.isEnabled = true
                     holder.bCompleted.setBackgroundColor(Color.parseColor(Constants.POSITIVE_BUTTON_COLOR))
                     holder.bFailed.setBackgroundColor(Color.parseColor(Constants.NEGATIVE_BUTTON_COLOR))
                 }
             }
-        }
     }
+}

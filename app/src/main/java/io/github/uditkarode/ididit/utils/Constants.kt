@@ -20,9 +20,6 @@ class Constants {
         const val HOME_GRADIENT_COLOR1 = "#ff512f"
         const val HOME_GRADIENT_COLOR2 = "#f09819"
 
-        /*original const val HOME_GRADIENT_COLOR1 = "#DDD6f3"
-        const val HOME_GRADIENT_COLOR2 = "#FAACA8"*/
-
         const val HABIT_GRADIENT_COLOR1 = "#DDD6F3"
         const val HABIT_GRADIENT_COLOR2 = "#70E1F5"
 

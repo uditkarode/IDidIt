@@ -69,7 +69,7 @@ class LogReg : Activity() {
                         override fun onError(error: ANError) {
                             MaterialDialog(this@LogReg).show {
                                 title(text = "Login Failed")
-                                message(text = JSONObject(error.errorBody.toString()).getString("message"))
+                                message(text = JSONObject(error.errorBody.toString()).getString("status"))
                                 positiveButton(text="Okay")
                                 positiveButton {
                                     stopLoading()
