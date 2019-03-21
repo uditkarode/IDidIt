@@ -140,7 +140,6 @@ class Home : AppCompatActivity() {
     fun dataHasLoaded(isEmpty: Boolean){
         if(!isEmpty){
             adapter.notifyDataSetChanged()
-            adapter.notifyDataSetChanged()
 
             homeLoader.animate().alpha(0f).setDuration(250).start()
             Handler().postDelayed({

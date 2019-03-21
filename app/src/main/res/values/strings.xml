@@ -7,4 +7,7 @@
     <string name="idi">I DID IT</string>
     <string name="login_hont">Username</string>
     <string name="password_hont">Password</string>
+    <string name="udit"><font color='#ffa842'>Udit</font> Karode</string>
+    <string name="karthik"><font color='#ffa842'>Karthik</font> Arwin</string>
+    <string name="himanshu"><font color='#ffa842'>Himanshu</font> Jain</string>
 </resources>
