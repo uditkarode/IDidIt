@@ -29,7 +29,7 @@
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_gravity="center_vertical"
-                        android:src="@mipmap/ic_launcher"
+                        android:src="@drawable/about"
                         tools:ignore="ContentDescription" />
 
                 <TextView
@@ -40,7 +40,7 @@
                         android:textSize="33sp"
                         android:paddingLeft="16dp"
                         android:paddingRight="16dp"
-                        android:text="I DID IT"
+                        android:text="ididit"
                         android:textStyle="bold"
                         fontPath="CircularB.ttf"
                         android:textAppearance="@style/TextAppearance.AppCompat.Headline" tools:ignore="MissingPrefix"/>
@@ -218,6 +218,17 @@
                             android:text="Web Developer"
                             android:textAppearance="@style/TextAppearance.AppCompat.Caption"
                             tools:ignore="HardcodedText" />
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/retvibe"
+                            android:layout_marginTop="60sp"
+                            android:textSize="18sp"
+                            android:layout_gravity="center_horizontal"
+                            fontPath="SanFranciscoM.otf"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                            tools:ignore="MissingPrefix"/>
 
                 </LinearLayout>
 
