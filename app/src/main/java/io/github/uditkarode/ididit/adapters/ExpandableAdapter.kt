@@ -10,6 +10,8 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import co.revely.gradient.RevelyGradient
+import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.input.input
 import com.androidnetworking.AndroidNetworking
 import com.androidnetworking.error.ANError
 import com.androidnetworking.interfaces.JSONObjectRequestListener
@@ -27,6 +29,8 @@ class HabitViewHolder(itemView: View): RecyclerView.ViewHolder(itemView), View.O
     val tv: TextView = itemView.findViewById(R.id.dabtv)
     val bCompleted: MaterialButton = itemView.findViewById(R.id.completed)
     val bFailed: MaterialButton = itemView.findViewById(R.id.failed)
+
+    val root = itemView.findViewById<View>(R.id.habit_rv_root)!!
 
     init { itemView.setOnClickListener(this) }
 
@@ -80,6 +84,37 @@ class ExpandableAdapter(private val habitList: ArrayList<Habit>, val home: WeakR
                 })
         }
 
+        holder.root.setOnLongClickListener {
+
+            MaterialDialog(holder.root.context).show {
+                title(text = "Delete habit")
+                message(text = "Are you sure you want to delete the habit '${habitList[pos].habitName}'? " +
+                        "This will also delete the habit history unrecoverably.")
+                positiveButton(text = "Okay")
+                negativeButton (text = "Cancel")
+                positiveButton {
+                    home.get()?.dataIsLoading()
+
+                    AndroidNetworking.post(Constants.BASE_URL + Constants.DELETE_RESOLUTION_ENDPOINT)
+                        .addHeaders("Authorisation", home.get()?.token)
+                        .addBodyParameter("title", habitList[pos].habitName)
+                        .build()
+                        .getAsJSONObject(object : JSONObjectRequestListener {
+                            override fun onResponse(response: JSONObject?) {
+                                Log.e("MCGOT_SUCCESSRESP5", response.toString())
+                                home.get()?.refreshRvData()
+                            }
+
+                            override fun onError(anError: ANError?) {
+                                Log.e("MCGOT_FAILURERESP6", anError?.errorDetail.toString())
+                                home.get()?.dataHasLoaded(isEmpty = true)
+                            }
+                        })
+                }
+            }
+            true
+        }
+
         holder.bFailed.setOnClickListener {
             holder.tv.text = habitList[pos].habitName
             home.get()?.dataIsLoading()
@@ -113,6 +148,7 @@ class ExpandableAdapter(private val habitList: ArrayList<Habit>, val home: WeakR
                             )
                         )
                         .on(holder.tv)
+
                     holder.tv.invalidate()
                     holder.bFailed.setBackgroundColor(Color.parseColor(Constants.COLOR_DISABLED))
                     holder.bFailed.isEnabled = false

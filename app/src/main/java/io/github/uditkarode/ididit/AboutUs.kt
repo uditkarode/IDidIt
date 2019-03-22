@@ -6,7 +6,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import co.revely.gradient.RevelyGradient
 import io.github.uditkarode.ididit.utils.Constants
-import kotlinx.android.synthetic.main.about_us.*
+import kotlinx.android.synthetic.main.about_us.about_header
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 
 class AboutUs: AppCompatActivity(){

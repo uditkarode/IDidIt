@@ -79,13 +79,29 @@
                     <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="0.8"
+                            android:text="1.0"
                             android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
 
                     <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="start|center_vertical"
+                            android:paddingBottom="16dp"
+                            android:paddingEnd="16dp"
                             android:text="Version"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                            android:textColor="?android:textColorSecondary" tools:ignore="RtlSymmetry"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Stable"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Flavour"
                             android:textAppearance="@style/TextAppearance.AppCompat.Caption"
                             tools:ignore="HardcodedText" />
 
@@ -93,7 +109,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
-                            android:text="Beta"
+                            android:text="Longhorn"
                             android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
 
                     <TextView
@@ -106,7 +122,7 @@
                     <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="uditkarode.github.io"
+                            android:text="https://retvibe.com/idi"
                             android:layout_marginTop="10dp"
                             android:autoLink="web"
                             android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
@@ -169,6 +185,24 @@
                             tools:ignore="HardcodedText" />
 
                     <TextView
+                            android:id="@+id/himanshu"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="18sp"
+                            android:text="@string/himanshu"
+                            fontPath="SanFranciscoM.otf"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                            tools:ignore="MissingPrefix"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Product Manager/Graphic Designer"
+                            android:layout_marginBottom="10sp"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                            tools:ignore="HardcodedText" />
+
+                    <TextView
                             android:id="@+id/karthik"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -182,24 +216,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Web Developer"
-                            android:layout_marginBottom="10sp"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-                            tools:ignore="HardcodedText" />
-
-                    <TextView
-                            android:id="@+id/himanshu"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="18sp"
-                            android:text="@string/himanshu"
-                            fontPath="SanFranciscoM.otf"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                            tools:ignore="MissingPrefix"/>
-
-                    <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Graphic Designer"
                             android:textAppearance="@style/TextAppearance.AppCompat.Caption"
                             tools:ignore="HardcodedText" />
 

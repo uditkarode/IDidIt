@@ -2,7 +2,7 @@ package io.github.uditkarode.ididit.utils
 
 class Constants {
     companion object {
-        const val BASE_URL = "https://uditkarode.tk/"
+        const val BASE_URL = "https://ididit-api.herokuapp.com/"
 
         const val SIGN_UP_ENDPOINT = "user/register"
         const val LOGIN_ENDPOINT = "user/login"
