@@ -15,6 +15,7 @@ import io.github.uditkarode.ididit.utils.Constants
 import io.github.uditkarode.ididit.utils.HabitStatistics
 import kotlinx.android.synthetic.main.activity_history.*
 import org.json.JSONArray
+import org.json.JSONObject
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 
 class History: Activity(){
@@ -43,20 +44,32 @@ class History: Activity(){
                         monthArray.add(tmpObj.getString("month"))
                         hsArray.add(HabitStatistics(tmpObj.getString("completed").toInt(),
                             tmpObj.getString("failed").toInt(), tmpObj.getString("not_marked").toInt()))
-
                     }
                     historyDataHasLoaded()
                 }
 
                 override fun onError(anError: ANError?) {
-                    MaterialDialog(this@History).show {
-                        title(text = "Data retrieval failed!")
-                        message(text = anError?.errorBody)
-                        positiveButton(text="Okay")
-                        positiveButton {
-                            finish()
+                    if(anError?.errorBody == null){
+                        MaterialDialog(this@History).show {
+                            title(text = "Login Failed")
+                            message(text = "Either you do not have a stable internet connection or our servers are down." +
+                                    "If it is the latter, we are working on it and will soon resolve the issue.")
+                            positiveButton(text="Okay")
+                            positiveButton {
+                                finish()
+                            }
+                        }
+                    } else {
+                        MaterialDialog(this@History).show {
+                            title(text = "Data retrieval failed!")
+                            message(text = JSONObject(anError.errorBody).getString("status"))
+                            positiveButton(text="Okay")
+                            positiveButton {
+                                finish()
+                            }
                         }
                     }
+
                 }
             })
 

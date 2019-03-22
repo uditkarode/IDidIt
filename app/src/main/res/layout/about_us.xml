@@ -89,7 +89,7 @@
                             android:paddingBottom="16dp"
                             android:paddingEnd="16dp"
                             android:text="Version"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
                             android:textColor="?android:textColorSecondary" tools:ignore="RtlSymmetry"/>
 
                     <TextView
@@ -115,7 +115,7 @@
                     <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Code Name"
+                            android:text="Codename"
                             android:textAppearance="@style/TextAppearance.AppCompat.Caption"
                             tools:ignore="HardcodedText" />
 
@@ -132,6 +132,21 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Website"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                            tools:ignore="HardcodedText" />
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="idi@retvibe.com"
+                            android:layout_marginTop="10dp"
+                            android:autoLink="email"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Contact"
                             android:textAppearance="@style/TextAppearance.AppCompat.Caption"
                             tools:ignore="HardcodedText" />
                 </LinearLayout>

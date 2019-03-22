@@ -75,13 +75,31 @@ class ExpandableAdapter(private val habitList: ArrayList<Habit>, val home: WeakR
                     }
 
                     override fun onError(anError: ANError?) {
-                        home.get()?.dataHasLoaded(isEmpty = true)
+                        if(anError?.errorBody == null){
+                            MaterialDialog(holder.root.context).show {
+                                title(text = "Status Set Failed")
+                                message(text = "Either you do not have a stable internet connection or our servers are down." +
+                                        "If it is the latter, we are working on it and will soon resolve the issue.")
+                                positiveButton(text="Okay")
+                                positiveButton {
+                                    home.get()?.dataHasLoaded(isEmpty = true)
+                                }
+                            }
+                        } else {
+                            MaterialDialog(holder.root.context).show {
+                                title(text = "Status Set Failed!")
+                                message(text = JSONObject(anError.errorBody).getString("status"))
+                                positiveButton(text="Okay")
+                                positiveButton {
+                                    home.get()?. dataHasLoaded(isEmpty = true)
+                                }
+                            }
+                        }
                     }
                 })
         }
 
         holder.root.setOnLongClickListener {
-
             MaterialDialog(holder.root.context).show {
                 title(text = "Delete habit")
                 message(text = "Are you sure you want to delete the habit '${habitList[pos].habitName}'? " +
@@ -101,7 +119,26 @@ class ExpandableAdapter(private val habitList: ArrayList<Habit>, val home: WeakR
                             }
 
                             override fun onError(anError: ANError?) {
-                                home.get()?.dataHasLoaded(isEmpty = true)
+                                if(anError?.errorBody == null){
+                                    MaterialDialog(holder.root.context).show {
+                                        title(text = "Status Set Failed")
+                                        message(text = "Either you do not have a stable internet connection or our servers are down." +
+                                                "If it is the latter, we are working on it and will soon resolve the issue.")
+                                        positiveButton(text="Okay")
+                                        positiveButton {
+                                            home.get()?.dataHasLoaded(isEmpty = true)
+                                        }
+                                    }
+                                } else {
+                                    MaterialDialog(holder.root.context).show {
+                                        title(text = "Status Set Failed!")
+                                        message(text = JSONObject(anError.errorBody).getString("status"))
+                                        positiveButton(text="Okay")
+                                        positiveButton {
+                                            home.get()?. dataHasLoaded(isEmpty = true)
+                                        }
+                                    }
+                                }
                             }
                         })
                 }
@@ -124,7 +161,26 @@ class ExpandableAdapter(private val habitList: ArrayList<Habit>, val home: WeakR
                     }
 
                     override fun onError(anError: ANError?) {
-                        home.get()?.dataHasLoaded(isEmpty = true)
+                        if(anError?.errorBody == null){
+                            MaterialDialog(holder.root.context).show {
+                                title(text = "Status Set Failed")
+                                message(text = "Either you do not have a stable internet connection or our servers are down." +
+                                        "If it is the latter, we are working on it and will soon resolve the issue.")
+                                positiveButton(text="Okay")
+                                positiveButton {
+                                    home.get()?.dataHasLoaded(isEmpty = true)
+                                }
+                            }
+                        } else {
+                            MaterialDialog(holder.root.context).show {
+                                title(text = "Status Set Failed")
+                                message(text = JSONObject(anError.errorBody).getString("status"))
+                                positiveButton(text="Okay")
+                                positiveButton {
+                                    home.get()?. dataHasLoaded(isEmpty = true)
+                                }
+                            }
+                        }
                     }
                 })
         }

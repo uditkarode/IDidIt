@@ -24,7 +24,6 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 import java.security.MessageDigest
 import kotlin.experimental.and
 
-
 class LogReg : Activity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -69,14 +68,27 @@ class LogReg : Activity() {
                         }
 
                         override fun onError(error: ANError) {
-                            MaterialDialog(this@LogReg).show {
-                                title(text = "Login Failed")
-                                message(text = JSONObject(error.errorBody.toString()).getString("status"))
-                                positiveButton(text="Okay")
-                                positiveButton {
-                                    stopLoading()
+                            if(error.errorBody == null){
+                                MaterialDialog(this@LogReg).show {
+                                    title(text = "Login Failed")
+                                    message(text = "Either you do not have a stable internet connection or our servers are down." +
+                                            "If it is the latter, we are working on it and will soon resolve the issue.")
+                                    positiveButton(text="Okay")
+                                    positiveButton {
+                                        stopLoading()
+                                    }
+                                }
+                            } else {
+                                MaterialDialog(this@LogReg).show {
+                                    title(text = "Login Failed")
+                                    message(text = JSONObject(error.errorBody.toString()).getString("status"))
+                                    positiveButton(text="Okay")
+                                    positiveButton {
+                                        stopLoading()
+                                    }
                                 }
                             }
+
                         }
                     }
                     )
@@ -104,12 +116,24 @@ class LogReg : Activity() {
                         }
 
                         override fun onError(error: ANError) {
-                            MaterialDialog(this@LogReg).show {
-                                title(text = "Register Failed")
-                                message(text = JSONObject(error.errorBody.toString()).getString("status"))
-                                positiveButton(text="Okay")
-                                positiveButton {
-                                    stopLoading()
+                            if(error.errorBody == null){
+                                MaterialDialog(this@LogReg).show {
+                                    title(text = "Login Failed")
+                                    message(text = "Either you do not have a stable internet connection or our servers are down." +
+                                            "If it is the latter, we are working on it and will soon resolve the issue.")
+                                    positiveButton(text="Okay")
+                                    positiveButton {
+                                        stopLoading()
+                                    }
+                                }
+                            } else {
+                                MaterialDialog(this@LogReg).show {
+                                    title(text = "Register Failed")
+                                    message(text = JSONObject(error.errorBody.toString()).getString("status"))
+                                    positiveButton(text="Okay")
+                                    positiveButton {
+                                        stopLoading()
+                                    }
                                 }
                             }
                         }
