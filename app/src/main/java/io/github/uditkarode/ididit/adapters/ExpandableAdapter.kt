@@ -1,7 +1,6 @@
 package io.github.uditkarode.ididit.adapters
 
 import android.graphics.Color
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +10,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import co.revely.gradient.RevelyGradient
 import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.input.input
 import com.androidnetworking.AndroidNetworking
 import com.androidnetworking.error.ANError
 import com.androidnetworking.interfaces.JSONObjectRequestListener
@@ -73,12 +71,10 @@ class ExpandableAdapter(private val habitList: ArrayList<Habit>, val home: WeakR
                 .build()
                 .getAsJSONObject(object : JSONObjectRequestListener {
                     override fun onResponse(response: JSONObject?) {
-                        Log.e("MCGOT_SUCCESSRESP", response.toString())
                         home.get()?.refreshRvData()
                     }
 
                     override fun onError(anError: ANError?) {
-                        Log.e("MCGOT_FAILURERESP", anError?.errorDetail.toString())
                         home.get()?.dataHasLoaded(isEmpty = true)
                     }
                 })
@@ -101,12 +97,10 @@ class ExpandableAdapter(private val habitList: ArrayList<Habit>, val home: WeakR
                         .build()
                         .getAsJSONObject(object : JSONObjectRequestListener {
                             override fun onResponse(response: JSONObject?) {
-                                Log.e("MCGOT_SUCCESSRESP5", response.toString())
                                 home.get()?.refreshRvData()
                             }
 
                             override fun onError(anError: ANError?) {
-                                Log.e("MCGOT_FAILURERESP6", anError?.errorDetail.toString())
                                 home.get()?.dataHasLoaded(isEmpty = true)
                             }
                         })
