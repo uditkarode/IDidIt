@@ -14,7 +14,8 @@ import io.github.uditkarode.ididit.utils.Constants
 import io.github.uditkarode.ididit.utils.HabitStatistics
 
 class HistoryAdapter(private val date: ArrayList<Int>,
-                     private val day: ArrayList<String>, private val stats: ArrayList<HabitStatistics>):
+                     private val day: ArrayList<String>,  private val month: ArrayList<String>,
+                     private val stats: ArrayList<HabitStatistics>):
     RecyclerView.Adapter<HistoryVH>(){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         HistoryVH(LayoutInflater.from(parent.context).inflate(R.layout.item_history, parent, false))
@@ -25,9 +26,9 @@ class HistoryAdapter(private val date: ArrayList<Int>,
     override fun onBindViewHolder(holder: HistoryVH, position: Int) {
         holder.tvDate.text = date[position].toString()
         holder.tvDay.text = day[position]
+        holder.tvMonth.text = month[position]
         holder.tvCompleted.text = "${stats[position].completed} completed"
         holder.tvFailed.text = "${stats[position].failed}+${stats[position].notMarked} failed"
-        Log.e("POPOL", holder.tvDate.text.toString())
 
         RevelyGradient.linear()
             .colors(intArrayOf(Color.parseColor(Constants.HOME_GRADIENT_COLOR1), Color.parseColor(Constants.HOME_GRADIENT_COLOR2)))
@@ -40,6 +41,10 @@ class HistoryAdapter(private val date: ArrayList<Int>,
         RevelyGradient.linear()
             .colors(intArrayOf(Color.parseColor(Constants.HABIT_FAILED_GRADIENT_COLOR1), Color.parseColor(Constants.HABIT_FAILED_GRADIENT_COLOR2)))
             .on(holder.tvFailed)
+
+        RevelyGradient.linear()
+            .colors(intArrayOf(Color.parseColor(Constants.LOGIN_GRADIENT_COLOR1), Color.parseColor(Constants.LOGIN_GRADIENT_COLOR2)))
+            .on(holder.tvMonth)
     }
 
 }
@@ -49,4 +54,5 @@ class HistoryVH(itemView: View): RecyclerView.ViewHolder(itemView) {
     val tvDay: TextView = itemView.findViewById(R.id.tvDay)
     val tvCompleted: TextView = itemView.findViewById(R.id.tvCompleted)
     val tvFailed: TextView = itemView.findViewById(R.id.tvFailed)
+    val tvMonth: TextView = itemView.findViewById(R.id.tvMonth)
 }

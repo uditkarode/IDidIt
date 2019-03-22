@@ -46,7 +46,8 @@ class Home : AppCompatActivity() {
         setSupportActionBar(bottombar)
 
         RevelyGradient.linear()
-            .colors(intArrayOf(Color.parseColor(Constants.HOME_GRADIENT_COLOR1), Color.parseColor(Constants.HOME_GRADIENT_COLOR2)))
+            .colors(intArrayOf(Color.parseColor(Constants.HOME_GRADIENT_COLOR1),
+                Color.parseColor(Constants.HOME_GRADIENT_COLOR2)))
             .on(homeheader)
 
         AndroidNetworking.initialize(applicationContext)
@@ -56,7 +57,7 @@ class Home : AppCompatActivity() {
         val sp = getSharedPreferences("account", 0)
         token = sp.getString("token", "ERROR")!!
         username = sp.getString("username", "ERROR")!!
-        joinDate = sp.getString("joined_on", "420/69/1337")!! //@TODO
+        joinDate = sp.getString("joined_on", "420/69/1337")!!
 
         adapterArray = ArrayList()
 
@@ -117,7 +118,6 @@ class Home : AppCompatActivity() {
             .build()
             .getAsJSONObject(object: JSONObjectRequestListener {
                 override fun onResponse(response: JSONObject?) {
-                    Log.e("GOTYA", response?.toString())
                     refreshRvData()
                 }
 
@@ -178,7 +178,7 @@ class Home : AppCompatActivity() {
                 val bottomNavDrawerFragment = BABDrawer()
                 val tbpBundle = Bundle()
                 tbpBundle.putString("userName", username)
-                tbpBundle.putString("joinDate", "joined on: " + joinDate)
+                tbpBundle.putString("joinDate", "joined on: $joinDate")
                 bottomNavDrawerFragment.arguments = tbpBundle
                 bottomNavDrawerFragment.show(supportFragmentManager, bottomNavDrawerFragment.tag)
             }

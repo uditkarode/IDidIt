@@ -12,7 +12,6 @@ import com.androidnetworking.AndroidNetworking
 import com.androidnetworking.error.ANError
 import com.androidnetworking.interfaces.JSONArrayRequestListener
 import io.github.uditkarode.ididit.adapters.HistoryAdapter
-import io.github.uditkarode.ididit.models.Habit
 import io.github.uditkarode.ididit.utils.Constants
 import io.github.uditkarode.ididit.utils.HabitStatistics
 import kotlinx.android.synthetic.main.activity_history.*
@@ -27,6 +26,7 @@ class History: Activity(){
 
         val dateArray = java.util.ArrayList<Int>()
         val dayArray = java.util.ArrayList<String>()
+        val monthArray = java.util.ArrayList<String>()
         val hsArray = ArrayList<HabitStatistics>()
 
         historyDataIsLoading()
@@ -39,9 +39,9 @@ class History: Activity(){
                     if(hsArray.isNotEmpty()) hsArray.clear()
                     for(i in 0 until response?.length()!!) {
                         val tmpObj = response.getJSONObject(i)
-
                         dateArray.add(tmpObj.getString("date").toInt())
                         dayArray.add(tmpObj.getString("day"))
+                        monthArray.add(tmpObj.getString("month"))
                         hsArray.add(HabitStatistics(tmpObj.getString("completed").toInt(),
                             tmpObj.getString("failed").toInt(), tmpObj.getString("not_marked").toInt()))
 
@@ -61,7 +61,7 @@ class History: Activity(){
                 }
             })
 
-        history_rv.adapter = HistoryAdapter(dateArray, dayArray, hsArray)
+        history_rv.adapter = HistoryAdapter(dateArray, dayArray, monthArray, hsArray)
         history_rv.layoutManager = LinearLayoutManager(this@History)
     }
 

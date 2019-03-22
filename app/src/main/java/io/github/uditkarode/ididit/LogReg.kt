@@ -21,6 +21,8 @@ import kotlinx.android.synthetic.main.activity_logreg.*
 import okhttp3.Response
 import org.json.JSONObject
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
+import java.security.MessageDigest
+import kotlin.experimental.and
 
 
 class LogReg : Activity() {
@@ -51,7 +53,7 @@ class LogReg : Activity() {
                 initializeLoading()
                 AndroidNetworking.post(Constants.BASE_URL + Constants.LOGIN_ENDPOINT)
                     .addBodyParameter("user", cLogin.username)
-                    .addBodyParameter("password", cLogin.password)
+                    .addBodyParameter("password", sha512(cLogin.password))
                     .build()
                     .getAsOkHttpResponseAndJSONObject(object : OkHttpResponseAndJSONObjectRequestListener {
                         override fun onResponse(okhttpResponse: Response, response: JSONObject) {
@@ -93,7 +95,7 @@ class LogReg : Activity() {
                 initializeLoading()
                 AndroidNetworking.post(Constants.BASE_URL + Constants.SIGN_UP_ENDPOINT)
                     .addBodyParameter("user", cLogin.username)
-                    .addBodyParameter("password", cLogin.password)
+                    .addBodyParameter("password", sha512(cLogin.password))
                     .build()
                     .getAsOkHttpResponseAndJSONObject(object : OkHttpResponseAndJSONObjectRequestListener {
                         override fun onResponse(okhttpResponse: Response, response: JSONObject) {
@@ -121,6 +123,16 @@ class LogReg : Activity() {
                 }
             }
         }
+    }
+
+    private fun sha512(str: String): String{
+        val md = MessageDigest.getInstance("SHA-512")
+        val digest = md.digest(str.toByteArray())
+        val sb = StringBuilder()
+        for (i in digest.indices) {
+            sb.append(Integer.toString((digest[i] and 0xff.toByte()) + 0x100, 16).substring(1))
+        }
+        return sb.toString()
     }
 
     private fun initializeLoading() {
