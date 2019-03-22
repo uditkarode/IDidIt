@@ -8,6 +8,7 @@ import android.os.Handler
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import co.revely.gradient.RevelyGradient
@@ -18,6 +19,7 @@ import com.androidnetworking.error.ANError
 import com.androidnetworking.interfaces.JSONArrayRequestListener
 import com.androidnetworking.interfaces.JSONObjectRequestListener
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import es.dmoral.toasty.Toasty
 import io.github.uditkarode.ididit.adapters.ExpandableAdapter
 import io.github.uditkarode.ididit.models.Habit
 import io.github.uditkarode.ididit.utils.BABDrawer
@@ -86,12 +88,24 @@ class Home : AppCompatActivity() {
                 }
 
                 override fun onError(anError: ANError?) {
-                    MaterialDialog(this@Home).show {
-                        title(text = "Data Retrieval Failed")
-                        message(text = anError?.errorBody)
-                        positiveButton(text="Okay")
-                        positiveButton {
-                            dataHasLoaded(isEmpty = true)
+                    if(anError?.errorBody == null){
+                        MaterialDialog(this@Home).show {
+                            title(text = "Login Failed")
+                            message(text = "Either you do not have a stable internet connection or our servers are down." +
+                                    "If it is the latter, we are working on it and will soon resolve the issue.")
+                            positiveButton(text="Okay")
+                            positiveButton {
+                                dataHasLoaded(isEmpty = true)
+                            }
+                        }
+                    } else {
+                        MaterialDialog(this@Home).show {
+                            title(text = "Data retrieval failed!")
+                            message(text = JSONObject(anError.errorBody).getString("status"))
+                            positiveButton(text="Okay")
+                            positiveButton {
+                                dataHasLoaded(isEmpty = true)
+                            }
                         }
                     }
                 }
@@ -117,10 +131,32 @@ class Home : AppCompatActivity() {
             .build()
             .getAsJSONObject(object: JSONObjectRequestListener {
                 override fun onResponse(response: JSONObject?) {
+                    Toasty.success(this@Home, "Habit added!", Toast.LENGTH_SHORT, true).show()
                     refreshRvData()
                 }
 
-                override fun onError(anError: ANError?) {}
+                override fun onError(anError: ANError?) {
+                    if(anError?.errorBody == null){
+                        MaterialDialog(this@Home).show {
+                            title(text = "Login Failed")
+                            message(text = "Either you do not have a stable internet connection or our servers are down." +
+                                    "If it is the latter, we are working on it and will soon resolve the issue.")
+                            positiveButton(text="Okay")
+                            positiveButton {
+                                dataHasLoaded(isEmpty = true)
+                            }
+                        }
+                    } else {
+                        MaterialDialog(this@Home).show {
+                            title(text = "Data retrieval failed!")
+                            message(text = JSONObject(anError.errorBody).getString("status"))
+                            positiveButton(text="Okay")
+                            positiveButton {
+                                dataHasLoaded(isEmpty = true)
+                            }
+                        }
+                    }
+                }
             })
     }
 

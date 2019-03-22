@@ -45,6 +45,17 @@
                                 <PersistentState>
                                   <option name="children">
                                     <map>
+                                      <entry key="backgroundImage">
+                                        <value>
+                                          <PersistentState>
+                                            <option name="values">
+                                              <map>
+                                                <entry key="scalingPercent" value="55" />
+                                              </map>
+                                            </option>
+                                          </PersistentState>
+                                        </value>
+                                      </entry>
                                       <entry key="foregroundImage">
                                         <value>
                                           <PersistentState>
@@ -61,9 +72,8 @@
                                   </option>
                                   <option name="values">
                                     <map>
-                                      <entry key="backgroundAssetType" value="COLOR" />
                                       <entry key="backgroundColor" value="ffffff" />
-                                      <entry key="foregroundImage" value="$USER_HOME$/Downloads/logo800.png" />
+                                      <entry key="foregroundImage" value="$USER_HOME$/Downloads/512 new.png" />
                                     </map>
                                   </option>
                                 </PersistentState>
