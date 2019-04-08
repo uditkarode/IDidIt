@@ -23,11 +23,11 @@ class HistoryAdapter(private val date: ArrayList<Int>,
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: HistoryVH, position: Int) {
-        holder.tvDate.text = date[position].toString()
-        holder.tvDay.text = day[position]
-        holder.tvMonth.text = month[position]
-        holder.tvCompleted.text = "${stats[position].completed} completed"
-        holder.tvFailed.text = "${stats[position].failed}+${stats[position].notMarked} failed"
+        holder.tvDate.text = date[itemCount-position-1].toString()
+        holder.tvDay.text = day[itemCount-position-1]
+        holder.tvMonth.text = month[itemCount-position-1]
+        holder.tvCompleted.text = "${stats[itemCount-position-1].completed} completed"
+        holder.tvFailed.text = "${stats[itemCount-position-1].failed}+${stats[itemCount-position-1].notMarked} failed"
 
         RevelyGradient.linear()
             .colors(intArrayOf(Color.parseColor(Constants.HOME_GRADIENT_COLOR1), Color.parseColor(Constants.HOME_GRADIENT_COLOR2)))

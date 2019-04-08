@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -13,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import co.revely.gradient.RevelyGradient
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.input.getInputLayout
 import com.afollestad.materialdialogs.input.input
 import com.androidnetworking.AndroidNetworking
 import com.androidnetworking.error.ANError
@@ -90,7 +92,7 @@ class Home : AppCompatActivity() {
                 override fun onError(anError: ANError?) {
                     if(anError?.errorBody == null){
                         MaterialDialog(this@Home).show {
-                            title(text = "Login Failed")
+                            title(text = "Failed")
                             message(text = "Either you do not have a stable internet connection or our servers are down." +
                                     "If it is the latter, we are working on it and will soon resolve the issue.")
                             positiveButton(text="Okay")
@@ -112,13 +114,15 @@ class Home : AppCompatActivity() {
             })
 
         fab.setOnClickListener {
-            MaterialDialog(this@Home).show {
-                input { _, text ->
-                    addResolution(text.toString())
-                }
-                positiveButton(text = "Okay")
-                negativeButton (text = "Cancel")
-            }
+            val addHabitDialog = MaterialDialog(this@Home)
+                .input { _, text -> addResolution(text.toString()) }
+                .positiveButton(text="Add")
+                .negativeButton(text="Cancel")
+
+            addHabitDialog.getInputLayout().boxBackgroundColor = Color.parseColor("#203038")
+            addHabitDialog.getInputLayout().editText!!.setTextColor(Color.parseColor("#ffffff"))
+
+            addHabitDialog.show()
         }
     }
 
@@ -183,7 +187,7 @@ class Home : AppCompatActivity() {
                 rv_habits.animate().alpha(1f).setDuration(150).start()
             }, 150)
         } else {
-            homeLoader.visibility = View.INVISIBLE
+            homeLoader.visibility = View.GONE
             if(adapterArray.isEmpty()) no_habits.visibility = View.VISIBLE
         }
     }

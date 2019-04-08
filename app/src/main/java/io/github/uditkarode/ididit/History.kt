@@ -17,6 +17,7 @@ import kotlinx.android.synthetic.main.activity_history.*
 import org.json.JSONArray
 import org.json.JSONObject
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
+import java.util.*
 
 class History: Activity(){
 
@@ -73,7 +74,8 @@ class History: Activity(){
                 }
             })
 
-        history_rv.adapter = HistoryAdapter(dateArray, dayArray, monthArray, hsArray)
+        history_rv.adapter =
+            HistoryAdapter(dateArray, dayArray, monthArray, hsArray)
         history_rv.layoutManager = LinearLayoutManager(this@History)
     }
 

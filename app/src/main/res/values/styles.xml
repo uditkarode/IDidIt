@@ -4,12 +4,20 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorBackgroundFloating">#203038</item>
+        <item name="md_color_title">#fbfbfb</item>
+        <item name="aesthetic_accent">@color/colorAccent</item>
+        <item name="md_color_content">#fbfbfb</item>
     </style>
 
     <style name="RegisterTheme" parent="Theme.MaterialComponents.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">#212121</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorBackgroundFloating">#203038</item>
+        <item name="md_color_title">#fbfbfb</item>
+        <item name="aesthetic_accent">@color/colorAccent</item>
+        <item name="md_color_content">#fbfbfb</item>
     </style>
 
 </resources>

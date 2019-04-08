@@ -10,6 +10,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.core.content.edit
 import co.revely.gradient.RevelyGradient
+import com.afollestad.aesthetic.Aesthetic
 import com.afollestad.materialdialogs.MaterialDialog
 import com.androidnetworking.AndroidNetworking
 import com.androidnetworking.error.ANError
@@ -182,4 +183,6 @@ class LogReg : Activity() {
     override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
     }
+
+    override fun onBackPressed() {}
 }
