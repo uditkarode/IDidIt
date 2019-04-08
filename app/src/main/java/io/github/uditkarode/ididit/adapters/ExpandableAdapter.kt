@@ -187,7 +187,6 @@ class ExpandableAdapter(private val habitList: ArrayList<Habit>, val home: WeakR
 
         when (habitList[pos].habitStatus) {
                 HabitStatus.COMPLETED -> {
-                    holder.tv.invalidate()
                     holder.tv.requestLayout()
 
                     RevelyGradient.linear()
@@ -199,7 +198,6 @@ class ExpandableAdapter(private val habitList: ArrayList<Habit>, val home: WeakR
                         )
                         .on(holder.tv)
 
-                    holder.tv.invalidate()
                     holder.bFailed.setBackgroundColor(Color.parseColor(Constants.COLOR_DISABLED))
                     holder.bFailed.isEnabled = false
                     holder.bCompleted.isEnabled = true
@@ -207,7 +205,6 @@ class ExpandableAdapter(private val habitList: ArrayList<Habit>, val home: WeakR
                 }
 
                 HabitStatus.FAILED -> {
-                    holder.tv.invalidate()
                     holder.tv.requestLayout()
 
                     RevelyGradient.linear()
@@ -226,6 +223,8 @@ class ExpandableAdapter(private val habitList: ArrayList<Habit>, val home: WeakR
                 }
 
                 HabitStatus.NOT_MARKED -> {
+                    holder.tv.requestLayout()
+
                     RevelyGradient.linear()
                         .colors(
                             intArrayOf(
