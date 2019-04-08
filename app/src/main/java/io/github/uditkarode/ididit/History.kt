@@ -11,13 +11,15 @@ import com.androidnetworking.AndroidNetworking
 import com.androidnetworking.error.ANError
 import com.androidnetworking.interfaces.JSONArrayRequestListener
 import io.github.uditkarode.ididit.adapters.HistoryAdapter
+import io.github.uditkarode.ididit.models.Habit
 import io.github.uditkarode.ididit.utils.Constants
 import io.github.uditkarode.ididit.utils.HabitStatistics
+import io.github.uditkarode.ididit.utils.HabitStatus
 import kotlinx.android.synthetic.main.activity_history.*
 import org.json.JSONArray
 import org.json.JSONObject
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
-import java.util.*
+import kotlin.collections.ArrayList
 
 class History: Activity(){
 
@@ -29,6 +31,7 @@ class History: Activity(){
         val dayArray = java.util.ArrayList<String>()
         val monthArray = java.util.ArrayList<String>()
         val hsArray = ArrayList<HabitStatistics>()
+        val dailyHabitSet = ArrayList<ArrayList<Habit>>()
 
         historyDataIsLoading()
 
@@ -45,6 +48,23 @@ class History: Activity(){
                         monthArray.add(tmpObj.getString("month"))
                         hsArray.add(HabitStatistics(tmpObj.getString("completed").toInt(),
                             tmpObj.getString("failed").toInt(), tmpObj.getString("not_marked").toInt()))
+
+                        val tmpDaily = ArrayList<Habit>()
+
+                        val cmpHabit: JSONArray = tmpObj.getJSONArray("completed_habits")
+                        val fldHabit: JSONArray = tmpObj.getJSONArray("failed_habits")
+                        val nmdHabit: JSONArray = tmpObj.getJSONArray("notmarked_habits")
+
+                        for(j in 0 until cmpHabit.length())
+                            tmpDaily.add(Habit(cmpHabit.getString(j), HabitStatus.COMPLETED))
+
+                        for(k in 0 until fldHabit.length())
+                            tmpDaily.add(Habit(fldHabit.getString(k), HabitStatus.FAILED))
+
+                        for(l in 0 until nmdHabit.length())
+                            tmpDaily.add(Habit(nmdHabit.getString(l), HabitStatus.NOT_MARKED))
+
+                        dailyHabitSet.add(tmpDaily)
                     }
                     historyDataHasLoaded()
                 }
@@ -74,8 +94,7 @@ class History: Activity(){
                 }
             })
 
-        history_rv.adapter =
-            HistoryAdapter(dateArray, dayArray, monthArray, hsArray)
+        history_rv.adapter = HistoryAdapter(dateArray, dayArray, monthArray, hsArray, dailyHabitSet)
         history_rv.layoutManager = LinearLayoutManager(this@History)
     }
 
