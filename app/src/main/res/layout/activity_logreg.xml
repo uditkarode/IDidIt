@@ -92,7 +92,7 @@
                 android:layout_height="wrap_content"
                 android:indeterminate="true"
                 android:indeterminateTintMode="src_atop"
-                android:indeterminateTint="@color/colorPrimary"
+                android:indeterminateTint="?aesthetic_accent"
                 android:layout_marginTop="20sp"
                 android:layout_gravity="center_horizontal"
         />
@@ -104,7 +104,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:text="Reinvent yourself!"
+            android:text="@string/quote"
     />
     
 </RelativeLayout>

@@ -79,7 +79,7 @@
                     <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="1.0"
+                            android:text="1.02"
                             android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
 
                     <TextView
@@ -109,7 +109,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
-                            android:text="Longhorn"
+                            android:text="Comet"
                             android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
 
                     <TextView
@@ -128,7 +128,6 @@
                             android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
 
                     <TextView
-                            android:id="@+id/app_version"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Website"

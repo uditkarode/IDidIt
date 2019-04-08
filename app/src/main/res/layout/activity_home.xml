@@ -43,7 +43,7 @@
             android:layout_gravity="center"
             android:indeterminate="true"
             android:indeterminateTintMode="src_atop"
-            android:indeterminateTint="@color/colorPrimary"
+            android:indeterminateTint="?aesthetic_accent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
     />
@@ -75,7 +75,7 @@
             android:layout_height="wrap_content"
             app:borderWidth="0dp"
             app:elevation="6dp"
-            android:backgroundTint="@color/colorPrimary"
+            android:backgroundTint="?aesthetic_accent"
             android:src="@drawable/plus"
             app:layout_anchor="@id/bottombar"
     />

@@ -2,12 +2,17 @@ package io.github.uditkarode.ididit.utils
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import com.afollestad.aesthetic.Aesthetic
+import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.color.ColorPalette
+import com.afollestad.materialdialogs.color.colorChooser
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import es.dmoral.toasty.Toasty
 import io.github.uditkarode.ididit.History
@@ -32,11 +37,26 @@ class BABDrawer: BottomSheetDialogFragment() {
         navigation_view.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.history -> startActivity(Intent(navigation_view.context, History::class.java))
+
                 R.id.logout -> {
                     activity?.getSharedPreferences("account", 0)?.edit()?.clear()?.apply()
                     Toasty.success(activity as Context, "Log out successful!", Toast.LENGTH_SHORT, true).show()
                     startActivity(Intent(activity, LogReg::class.java))
                 }
+
+                /*R.id.aestheticise -> {
+                    MaterialDialog(activity as Context).show {
+                        title(text = "Choose your aesthetic")
+                        colorChooser(ColorPalette.Primary, subColors = ColorPalette.PrimarySub) { _, color ->
+                            Aesthetic.config {
+                                isDark(true)
+                                colorStatusBarAuto()
+                                attribute(R.attr.aesthetic_accent, color)
+                            }
+                        }
+                        positiveButton(text = "Looks good!")
+                    }
+                }*/
             }
             true
         }

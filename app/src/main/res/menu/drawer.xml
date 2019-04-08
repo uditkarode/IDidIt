@@ -8,6 +8,13 @@
             app:showAsAction="ifRoom"
     />
 
+   <!-- <item
+            android:id="@+id/aestheticise"
+            android:icon="@drawable/aestheticise"
+            android:title="Aestheticise"
+            app:showAsAction="ifRoom"
+    /> -->
+
     <item
             android:id="@+id/logout"
             android:icon="@drawable/cross"
