@@ -200,7 +200,7 @@ class ExpandableAdapter(private val habitList: ArrayList<Habit>, val home: WeakR
 
                     holder.bFailed.setBackgroundColor(Color.parseColor(Constants.COLOR_DISABLED))
                     holder.bFailed.isEnabled = false
-                    holder.bCompleted.isEnabled = true
+                    holder.bCompleted.isEnabled = false
                     holder.bCompleted.setBackgroundColor(Color.parseColor(Constants.POSITIVE_BUTTON_COLOR))
                 }
 
@@ -217,7 +217,7 @@ class ExpandableAdapter(private val habitList: ArrayList<Habit>, val home: WeakR
                         .on(holder.tv)
 
                     holder.bCompleted.setBackgroundColor(Color.parseColor(Constants.COLOR_DISABLED))
-                    holder.bFailed.isEnabled = true
+                    holder.bFailed.isEnabled = false
                     holder.bCompleted.isEnabled = false
                     holder.bFailed.setBackgroundColor(Color.parseColor(Constants.NEGATIVE_BUTTON_COLOR))
                 }
